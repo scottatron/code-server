@@ -1,0 +1,21 @@
+name: Helm Chart
+
+on:
+  push:
+    tags:
+      - v*
+      - helm-chart/v*
+
+jobs:
+  build:
+    permissions:
+      contents: read
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/setup-helm@v4.2.0
+      - uses: JimCronqvist/action-helm-chart-repo@0.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          chartsPath: ci/helm-chart
